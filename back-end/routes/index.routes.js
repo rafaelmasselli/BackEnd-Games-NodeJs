@@ -9,18 +9,14 @@ const jogo = [
         jogou: 'Sim',
         avaliacao:9,
         ID: 1
-       
     },
             {
-
         nome: 'Pokemon ruby',
         image: 'https://64.media.tumblr.com/f84d11d0c29a0f37cbb609f8149ccf70/tumblr_nyt6lpODCb1s3bc1no1_500.gifv',
         genero: 'RPG',
         jogou: 'Sim',
         avaliacao:9,
         ID:2
-
-    
     },
             {
         nome: 'Pokemon Emerald',
@@ -31,18 +27,18 @@ const jogo = [
         ID: 3,
     }
 ]
-// get inicial // V
+// get inicial 
 router.get('/', (req, res) =>{
     res.send(jogo)
 })
 
 
-//get Rederizar com id // V
+//get Rederizar com id /
 router.get('/:id', (req, res) => {
     const idP = req.params.id;
     const jogos = jogo.find(intem => intem.ID == idP);
 
-    // verifica se a vaga nao foi encontrada
+    
     if(!jogos) {
         res.status(404).send({error: 'Jogo nao encontrada'});
         return;
@@ -51,54 +47,71 @@ router.get('/:id', (req, res) => {
     res.send(jogos);
 })
 
-// post Criar // V
+// post Criar 
 router.post('/New', (req, res) => {
 
     const jogos = req.body;
 
-    if (!jogos){
-  res.status(400).send({
-        message: 'invalid ,Preecha o formulario'
-        })
-        console.log('Vazio')
-    }
-    if(!jogos.nome){
-     res.status(400).send({
-        message: 'invalid ,preencha o campo nome'
-        })
-        console.log('nome')
-    }
-    if(!jogos.avaliacao){
-                res.status(400).send({
-            message: 'invalid ,preenca o campo de nota'
-        })
-        console.log('nota')
-    }
-    if(!jogos.genero){
-                res.status(400).send({
-            message: 'invalid ,preencha o campo genero'
-        })
-        console.log('genero')
-    }
-    if (!jogos.image){
+    if(!jogos) {
         res.status(400).send({
-            message: 'invalid ,preenhca o campo imagem url'
+            message: 'erro Preencha todos os campos corretamente'
         })
-        console.log('imagem')
-    }
-
+        return;
+    }else if (!jogos.nome) {
+        res.status(400).send({message: 'Erro preencha o campo Nome'
+     })
+    return;
+}else if (!jogos.image) {
+        res.status(400).send({message: 'Erro preencha o campo da Imagem url'
+     })
+    return;
+}else if (!jogos.genero) {
+        res.status(400).send({message: 'Erro preencha o campo Genero'
+     })
+    return;
+}else if (!jogos.jogou) {
+        res.status(400).send({message: 'erro burla'
+     })
+    return;
+}else if (!jogos.avaliacao){
+    res.status(400).send({message: 'erro preencha o campo nota'})
+    return;
+}
      jogos.ID = Date.now();
-
     jogo.push(jogos);
-    res.status(201).send({messsage:`Jogo adicionado com sucesso `,data:jogo});
+    res.status(201).send({message:`jogo ${jogos.nome} adicionado com sucesso`,data:jogo});
 })
 
-
-// put Editar/ V
+// put Editar
 router.put('/edit/:id', (req, res) => {
 
     const Edit = req.body;
     const idParam= req.params.id;
+
+    if (!Edit){
+        res.status(400).send({message:"Erro. preecha todos os campos"})
+          return;
+    }else if (!Edit.nome) {
+        res.status(400).send({message: 'Erro. Campo de Nome nao foi preenchido, tente novamente'
+     })
+    return;
+    }else if (!Edit.image) {
+        res.status(400).send({message: 'Erro. Campo de Imagem url nao foi preenchido, tente novamente'
+     })
+    return;
+    }else if (!Edit.genero) {
+        res.status(400).send({message: 'Erro. Campo de Genero nao foi preenchido, tente novamente'
+     })
+    return;
+    }else if (!Edit.jogou) {
+        res.status(400).send({message: 'Preencha o campo nota'
+     })
+    return;
+    }else if (!Edit.avaliacao) {
+        res.status(400).send({message: 'Erro. Campo de nota nao foi preenchido, tente novamente'
+     })
+    return;
+    }
     let index = jogo.findIndex(jogoz => jogoz.ID == idParam);
     
     if(index < 0) {
@@ -111,6 +124,33 @@ router.put('/edit/:id', (req, res) => {
         data: jogo[index]
     })
 })
+
+// put do botao status 
+router.put('/edite/:id', (req, res) => {
+
+    const Edit = req.body;
+    const idParam= req.params.id;
+
+    if (!Edit.jogou) {
+        res.status(400).send({message: 'Erro Burla'
+     })
+    }
+
+    let index = jogo.findIndex(jogoz => jogoz.ID == idParam);
+    
+    if(index < 0) {
+        res.status(404).send({error: 'O campo nao foi encontrado'})
+        return;
+    }
+    jogo[index] = {...jogo[index],...Edit}
+    res.send({
+        message: `Status do ${jogo[index].nome} foi alterado com sucesso!`,
+        data: jogo[index]
+    })
+})
+
+
+
 
 // delete /deleter / V
 router.delete('/delete/:id', (req, res) => {
