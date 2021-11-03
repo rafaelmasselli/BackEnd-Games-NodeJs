@@ -37,13 +37,10 @@ router.get('/', (req, res) =>{
 router.get('/:id', (req, res) => {
     const idP = req.params.id;
     const jogos = jogo.find(intem => intem.ID == idP);
-
-    
     if(!jogos) {
         res.status(404).send({error: 'Jogo nao encontrada'});
         return;
     }
-
     res.send(jogos);
 })
 
@@ -52,32 +49,35 @@ router.post('/New', (req, res) => {
 
     const jogos = req.body;
 
-    if(!jogos) {
-        res.status(400).send({
-            message: 'erro Preencha todos os campos corretamente'
-        })
-        return;
-    }else if (!jogos.nome) {
-        res.status(400).send({message: 'Erro preencha o campo Nome'
-     })
+const verifica = jogo.find((c) => c.nome.toLowerCase() === jogos.nome.toLowerCase());
+const verificaI = jogo.find((c) => c.image.toLowerCase() === jogos.image.toLowerCase())
+
+if(!jogos) { res.status(400).send({message: 'Erro Preencha todos os campos corretamente' })
     return;
-}else if (!jogos.image) {
-        res.status(400).send({message: 'Erro preencha o campo da Imagem url'
-     })
+
+}else if (!jogos.nome) {res.status(400).send({message: 'Erro preencha o campo Nome'})
     return;
-}else if (!jogos.genero) {
-        res.status(400).send({message: 'Erro preencha o campo Genero'
-     })
+
+}else if (!jogos.image) {res.status(400).send({message: 'Erro preencha o campo da Imagem url'})
     return;
-}else if (!jogos.jogou) {
-        res.status(400).send({message: 'erro burla'
-     })
+
+}else if (!jogos.genero) { res.status(400).send({message: 'Erro preencha o campo Genero'})
     return;
-}else if (!jogos.avaliacao){
-    res.status(400).send({message: 'erro preencha o campo nota'})
+
+}else if (!jogos.jogou) {res.status(400).send({message:'Erro burla' })
     return;
+
+}else if (!jogos.avaliacao){res.status(400).send({message:'Erro preencha o campo nota'})
+    return;
+
+}else if (verifica){
+    return res.status(409).send({message: 'Esse jogo ja exixste na tabela'})
+
+}else if (verificaI){
+    return res.status(409).send({message: 'Essa imagem ja existe na tabela'})
+
 }
-     jogos.ID = Date.now();
+    jogos.ID = Date.now();
     jogo.push(jogos);
     res.status(201).send({message:`jogo ${jogos.nome} adicionado com sucesso`,data:jogo});
 })
@@ -88,36 +88,31 @@ router.put('/edit/:id', (req, res) => {
     const Edit = req.body;
     const idParam= req.params.id;
 
-    if (!Edit){
-        res.status(400).send({message:"Erro. preecha todos os campos"})
+if (!Edit){res.status(400).send({message:"Erro. preecha todos os campos"})
           return;
-    }else if (!Edit.nome) {
-        res.status(400).send({message: 'Erro. Campo de Nome nao foi preenchido, tente novamente'
-     })
+    }else if (!Edit.nome) {res.status(400).send({message: 'Erro. Campo de Nome nao foi preenchido, tente novamente'})
     return;
-    }else if (!Edit.image) {
-        res.status(400).send({message: 'Erro. Campo de Imagem url nao foi preenchido, tente novamente'
-     })
+
+    }else if (!Edit.image) { res.status(400).send({message: 'Erro. Campo de Imagem url nao foi preenchido, tente novamente'})
     return;
-    }else if (!Edit.genero) {
-        res.status(400).send({message: 'Erro. Campo de Genero nao foi preenchido, tente novamente'
-     })
+
+    }else if (!Edit.genero) {res.status(400).send({message: 'Erro. Campo de Genero nao foi preenchido, tente novamente'})
     return;
-    }else if (!Edit.jogou) {
-        res.status(400).send({message: 'Preencha o campo nota'
-     })
+
+    }else if (!Edit.jogou) {res.status(400).send({message: 'Preencha o campo nota'})
     return;
-    }else if (!Edit.avaliacao) {
-        res.status(400).send({message: 'Erro. Campo de nota nao foi preenchido, tente novamente'
-     })
+
+    }else if (!Edit.avaliacao) {res.status(400).send({message: 'Erro. Campo de nota nao foi preenchido, tente novamente'})
     return;
     }
+ 
     let index = jogo.findIndex(jogoz => jogoz.ID == idParam);
     
     if(index < 0) {
         res.status(404).send({error: 'O campo nao foi encontrado'})
         return;
     }
+
     jogo[index] = {...jogo[index],...Edit}
     res.send({
         message: `O jogo ${jogo[index].nome}foi atualizado com sucesso`,
