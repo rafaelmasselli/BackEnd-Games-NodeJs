@@ -18,7 +18,7 @@ $ npm install
 // Iniciando o projeto como Usuário
 $ npm start
 
-// Iniciando o projeto como desenveolvedor 
+// Iniciando o projeto como desenvolvedor 
 $ npm start dev
 
 ```
