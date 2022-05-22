@@ -1,9 +1,38 @@
-<h1>Projeto Modulo3 / Crud / Back-end</h1>
+<h1 align="center"> ⚡ Backend Games  ⚡</h1>
 
-<h2>catalago de jogos antigos</h2>
-<img src="https://giffiles.alphacoders.com/116/11689.gif">
+## Pre-requisitos 📝
 
-<h2>Depedencias instaladas</h2>
-<lI>npm init</li>
-<lI>npm install express</li>
-<lI>npm install nodemon</li>
+### Para iniciar o projeto você ira precisa do <a href="https://nodejs.org/en/">Node js</a> e de uma ide recomendo o <a href="https://visualstudio.microsoft.com/pt-br/downloads/">Visual studio</a> e do <a href="https://git-scm.com/downloads">git</a> para clonar o projeto
+
+
+
+## Iniciando o projeto 🎲 
+
+```
+// Clonado o projeto
+$ git clone https://github.com/rafaelmasselli/BackEnd-Games-NodeJs
+
+// Instalando o projeto
+$ npm install
+
+// Iniciando o projeto como Usuário
+$ npm start
+
+// Iniciando o projeto como desenveolvedor 
+$npm start dev
+
+```
+
+
+## Descrição 
+### Catalago de jogos
+
+- [x] Visualizar. Get
+- [x] Criar jogo. Post
+- [x] Editar algum jogo. Patch
+
+
+## Depedencias instaladas
+
+> Express, Nodemon 
+
