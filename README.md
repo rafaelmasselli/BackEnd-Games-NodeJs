@@ -19,7 +19,7 @@ $ npm install
 $ npm start
 
 // Iniciando o projeto como desenveolvedor 
-$npm start dev
+$ npm start dev
 
 ```
 
