@@ -1,0 +1,42 @@
+.top1 {
+  width: 300px;
+  height: 230px;
+}
+body {
+  background: rgb(38, 38, 38);
+  background: linear-gradient(
+    90deg,
+    rgb(128, 127, 127) 0%,
+    rgba(9, 8, 9, 0.38131226611738445) 48%,
+    rgba(37, 39, 40, 1) 100%
+  );
+}
+.centralize {
+  margin-top: 30px;
+}
+.centralize {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.centralize1 {
+  margin: 20px;
+}
+h1 {
+  margin: 30px;
+}
+.tamanho {
+  height: 240px;
+  width: 260px;
+}
+.test {
+  background-color: rgb(14, 209, 86);
+}
+
+.fontt {
+  font-size: 20px;
+}
+.Status {
+  font-size: 20px;
+}
